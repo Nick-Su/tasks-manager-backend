@@ -4,7 +4,7 @@ const routes = require("./routes") // new
 const createServer = require('./tests/server');
 
 mongoose
-  .connect("mongodb://localhost:27017/my-db", { useNewUrlParser: true,  useUnifiedTopology: true })
+  .connect("mongodb://localhost:27017/tasksDb", { useNewUrlParser: true,  useUnifiedTopology: true })
 	.then(() => {
 		const app = express();
 
