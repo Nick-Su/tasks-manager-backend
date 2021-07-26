@@ -134,9 +134,10 @@ test('PATCH /api/tasks/:id', async () => {
   });
 
   const data = {
-    isCompleted: !task.isCompleted
+    isToggleComplete: true
   };
 
+  // Test if we can mark task as complete
   await supertest(app)
           .patch('/api/tasks/' + task.id)
           .send(data)
@@ -145,12 +146,31 @@ test('PATCH /api/tasks/:id', async () => {
             // Check the server response
             expect(response.body._id).toBe(task.id);
             expect(response.body.description).toBe(task.description);
-            expect(response.body.isCompleted).toBe(data.isCompleted)
+            expect(response.body.isCompleted).toBe(true);
 
             // Check the data in the DB
             const newTask = await Task.findOne({ _id: response.body._id })
             expect(newTask).toBeTruthy();
             expect(newTask.description).toBe(task.description);
-            expect(newTask.isCompleted).toBe(data.isCompleted)
+            expect(newTask.isCompleted).toBe(true);
+          })
+
+  // Test if we can mark task as uncomplete
+  await supertest(app)
+          .patch('/api/tasks/' + task.id)
+          .send(data)
+          .expect(200)
+          .then(async (response) => {
+            // Check the server response
+            expect(response.body._id).toBe(task.id);
+            expect(response.body.description).toBe(task.description);
+            expect(response.body.isCompleted).toBe(false);
+
+            // Check the data in the DB
+            console.log('vice versa', task.isCompleted)
+            const newTask = await Task.findOne({ _id: response.body._id })
+            expect(newTask).toBeTruthy();
+            expect(newTask.description).toBe(task.description);
+            expect(newTask.isCompleted).toBe(false);
           })
 })

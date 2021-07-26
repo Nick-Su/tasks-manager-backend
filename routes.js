@@ -39,8 +39,8 @@ router.patch('/tasks/:id', async (req, res) => {
       task.description = req.body.description;
     }
 
-    if(req.body.isCompleted) {
-      task.isCompleted = req.body.isCompleted;
+    if(req.body.isToggleComplete) {
+      task.isCompleted = !task.isCompleted
     }
 
     await task.save();
