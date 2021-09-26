@@ -6,7 +6,7 @@ const app = createServer();
 
 beforeEach((done) => {
   mongoose.connect(
-    'mongodb://localhost:27017/tasksDb_test',
+    'mongodb://mongodb:27017/tasksDb-test',
     { useNewUrlParser: true,  useUnifiedTopology: true },
     () => done()
   )
